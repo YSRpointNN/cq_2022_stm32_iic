@@ -1,0 +1,52 @@
+
+void iic_start(){
+    oled_sda = 1;
+	delay_ms(1);
+    oled_scl = 1;
+	delay_ms(2);
+    oled_sda = 0;
+	delay_ms(1);
+    oled_scl = 0;
+	delay_ms(2);
+}
+
+void iic_stop(){
+    oled_sda = 0;
+    oled_scl = 1;
+	delay_ms(2);
+    oled_sda = 1;
+	delay_ms(2);
+}
+
+void iic_send_byte(unsigned char byte){
+    unsigned char i;
+    for(i=0; i<8; i++){
+        oled_sda = byte & (0x80 >> i);
+		delay_ms(1);
+        oled_scl = 1;
+		delay_ms(1);
+        oled_scl = 0;
+		delay_ms(1);
+    }
+	oled_sda = 1;
+    oled_scl = 1;
+	delay_ms(1);
+    oled_scl = 0;
+	delay_ms(1);
+}
+
+void oled_writecommand(command){
+    iic_start();
+    iic_send_byte(0x78);
+    iic_send_byte(0x00);
+    iic_send_byte(command);
+    iic_stop();
+}
+
+void oled_writedata(indata){
+    iic_start();
+    iic_send_byte(0x78);
+    iic_send_byte(0x40);
+    iic_send_byte(indata);
+    iic_stop();
+}
