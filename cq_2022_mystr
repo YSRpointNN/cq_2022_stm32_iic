@@ -1,0 +1,21 @@
+int ShowNumb(unsigned long numb){
+    unsigned int lenbuffer = numb;
+    unsigned int len = 0;
+    while (lenbuffer){
+        lenbuffer /= 10;
+        len += 1;
+    }
+
+    char output[len];
+    unsigned int i;
+    for(i=0;i<len;i++){
+        unsigned int wei = 1;
+        unsigned int j;
+        for(j=0;j<i;j++){
+            wei *= 10;
+        }
+        char single = (numb % wei ) / (wei / 10) + 0x30;
+        output[i] = single;
+    }
+    return output;
+}
