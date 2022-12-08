@@ -1,38 +1,38 @@
 
 void iic_start(){
     oled_sda = 1;
-	delay_ms(1);
+	delay_us(1);
     oled_scl = 1;
-	delay_ms(2);
+	delay_us(2);
     oled_sda = 0;
-	delay_ms(1);
+	delay_us(1);
     oled_scl = 0;
-	delay_ms(2);
+	delay_us(2);
 }
 
 void iic_stop(){
     oled_sda = 0;
     oled_scl = 1;
-	delay_ms(2);
+	delay_us(2);
     oled_sda = 1;
-	delay_ms(2);
+	delay_us(2);
 }
 
 void iic_send_byte(unsigned char byte){
     unsigned char i;
     for(i=0; i<8; i++){
         oled_sda = byte & (0x80 >> i);
-		delay_ms(1);
+		delay_us(1);
         oled_scl = 1;
-		delay_ms(1);
+		delay_us(1);
         oled_scl = 0;
-		delay_ms(1);
+		delay_us(1);
     }
 	oled_sda = 1;
     oled_scl = 1;
-	delay_ms(1);
+	delay_us(1);
     oled_scl = 0;
-	delay_ms(1);
+	delay_us(1);
 }
 
 void oled_writecommand(command){
